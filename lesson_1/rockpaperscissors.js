@@ -3,7 +3,6 @@ const readline = require('readline-sync');
 function createPlayer() {
   return {
     move: null,
-    score: 0, //**
   };
 }
 
@@ -20,7 +19,6 @@ function createComputer() {
 
   return Object.assign(playerObject, computerObject);
 }
-
 
 function createHuman() {
   let playerObject = createPlayer();
@@ -42,12 +40,21 @@ function createHuman() {
   return Object.assign(playerObject, humanObject);
 }
 
+function createScoreBoard() { ///
+  return {
+    player: 0,
+    computer: 0,
+  };
+}
+
 const RPSGame = {
   human: createHuman(),
   computer: createComputer(),
+  score: createScoreBoard(), ///
 
   displayWelcomeMessage() {
     console.log('Welcome to Rock, Paper, Scissors!');
+    console.log('The match is a best of five! Good Luck!');
   },
 
   displayGoodbyeMessage() {
@@ -65,12 +72,24 @@ const RPSGame = {
         (humanMove === 'paper' && computerMove === 'rock') ||
         (humanMove === 'scissors' && computerMove === 'paper')) {
       console.log('You win!');
+      this.score.player += 1;
     } else if ((humanMove === 'rock' && computerMove === 'paper') ||
                (humanMove === 'paper' && computerMove === 'scissors') ||
                (humanMove === 'scissors' && computerMove === 'rock')) {
       console.log('Computer wins!');
+      this.score.computer += 1;
     } else {
       console.log("It's a tie");
+    }
+  },
+
+  scoreBoard() {
+    if (this.score.player === 5 || this.score.computer === 5) {
+      console.log(`${this.score.player === 5 ? 'Player': 'The Computer'} wins the match!`)
+      this.score.player = 0;
+      this.score.computer = 0;
+    } else {
+      console.log(`The score is: Player: ${this.score.player}, Computer: ${this.score.computer}`);
     }
   },
 
@@ -86,6 +105,7 @@ const RPSGame = {
       this.human.choose();
       this.computer.choose();
       this.displayWinner();
+      this.scoreBoard();
       if (!this.playAgain()) break;
     }
 
