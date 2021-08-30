@@ -124,6 +124,11 @@ let TTTGame = {
     return this;
   },
 
+  //playAgain() {
+  //  let prompt = 'Play again? (y/n)';
+  //  let anotherGame = readline.question(prompt);
+  //}
+
   play() {
     this.displayWelcomeMessage();
 
@@ -155,6 +160,17 @@ let TTTGame = {
     console.log("Thanks for playing Tic Tac Toe! Goodbye!");
   },
 
+  joinOr(array, punctuation = ', ', joiner = 'or') {
+    switch(array) {
+      case array.length === 1:
+        return array[0];
+      case array.length === 2:
+        return `${array[0]} ${joiner} ${array[1]}`;
+      default:
+        return `${array.slice(0, array.length - 1).join(punctuation)}${punctuation}${joiner} ${array[array.length - 1]}`
+    }
+  },
+
   displayResults() {
     if (this.isWinner(this.human)) {
       console.log("You won! Congratulations!");
@@ -170,7 +186,7 @@ let TTTGame = {
 
     while (true) {
       let validChoices = this.board.unusedSquares();
-      const prompt = `Choose a square(${validChoices.join(', ')}): `;
+      const prompt = `Choose a square(${this.joinOr(validChoices)}): `;
       choice = readline.question(prompt);
 
       if (validChoices.includes(choice)) break;
