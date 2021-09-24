@@ -4,11 +4,29 @@ const towMixin = {
   }
 }
 
-class Truck {}
 
-Object.assign(Truck.prototype, towMixin);
+// //ES6 Class
+// class Truck {}
 
-class Car {}
+// Object.assign(Truck.prototype, towMixin);
 
-let truck = new Truck();
+// class Car {}
+
+// Constructors and Prototypes
+
+// function Truck() {};
+
+// Object.assign(Truck.prototype, towMixin)
+
+// function Car(){};
+
+//OLOO
+
+let truckPrototype = {};
+
+let carPrototype = {};
+
+Object.assign(truckPrototype, towMixin);
+
+let truck = Object.create(truckPrototype);
 truck.tow();

@@ -1,21 +1,53 @@
 const walkMixin = {
   walk() {
-    console.log("Let's go for a walk!");
+    return "Let's go for a walk!";
   }
 }
 
-class Cat {
-  constructor(name) {
-    this.name = name;
-  }
 
-  greet() {
-    return `Hello! My name is ${this.name}!`;
+// //ES6 Class
+// class Cat {
+//   constructor(name) {
+//     this.name = name;
+//   }
+
+//   greet() {
+//     return `Hello! My name is ${this.name}!`;
+//   }
+// }
+
+// //Constructors and Prototypes
+// function Cat(name) {
+//   this.name = name;
+// }
+
+// Cat.prototype.greet = function() {
+//   return `Hello! My name is ${this.name}!`;
+// }
+
+//OLOO
+// let catPrototype = {
+//   init(name) {
+//     this.name = name;
+//     return this;
+//   },
+
+//   greet() {
+//     return `Hello! My name is ${this.name}!`;
+//   },
+// }
+
+//Factory Function
+
+function cat(name) {
+  return {
+    name,
+    greet() {
+      return `Hello! My name is ${this.name}!`;
+    },
   }
 }
-
-Object.assign(Cat.prototype, walkMixin);
-
-let kitty = new Cat("Sophie");
+let kitty = cat("Sophie");
+Object.assign(kitty, walkMixin);
 console.log(kitty.greet());
 console.log(kitty.walk());
